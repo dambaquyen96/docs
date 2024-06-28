@@ -51,13 +51,8 @@
       "pages": [
         "api-reference/endpoint/verify"
       ]
-    },
-    {
-      "group": "Webhooks",
-      "pages": [
-        "api-reference/endpoint/webhook"
-      ]
     }
+    
   ],
   "footerSocials": {
     "facebook": "https://www.facebook.com/mptransformation"
