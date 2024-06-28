@@ -48,6 +48,29 @@
       }
     }
   },
+  "webhooks": {
+    "/webhook": {
+      "post": {
+        "description": "Webhook bạn cần xây dựng để hứng kết quả xác thực từ hệ thống Call Authenticator",
+        "requestBody": {
+          "description": "Webhook Request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/callbacks/WebhookRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Trả về 200 để thông báo đã nhận được kết quả xác thực thành công"
+          }
+        }
+      }
+    }
+  },
   "components": {
     "schemas": {
       "VerifyRequest": {
@@ -107,6 +130,35 @@
             "description": "Thời gian hết hạn của mã xác thực, định dạng timestamp millisecond. Nếu thời gian vượt ngưỡng expire_time, bạn cần request 1 phiên xác thực mới",
             "type": "integer",
             "format": "int32"
+          }
+        }
+      }
+    },
+    "callbacks": {
+      "WebhookRequest": {
+        "required": [
+          "session_id",
+          "verify_code",
+          "verify_result"
+        ],
+        "type": "object",
+        "properties": {
+          "session_id": {
+            "description": "Mã định danh của phiên xác thực",
+            "type": "string"
+          },
+          "verify_code": {
+            "description": "Mã kết quả xác thực OTP, là 1 trong các giá trị:\n- 200 : Xác thực thành công\n- 301: Xác thực thất bại - KH có nhấc máy\n- 401: Xác thực thất bại - Không kết nối được KH",
+            "type": "integer",
+            "format": "int32"
+          },
+          "verify_result": {
+            "description": "Nội dung kết quả xác thực",
+            "type": "string"
+          },
+          "metadata": {
+            "description": "Thông tin dữ liệu được bổ sung tại request tương ứng (nếu có)",
+            "type": "string"
           }
         }
       }
