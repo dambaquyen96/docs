@@ -54,7 +54,7 @@
     {
       "group": "Webhooks",
       "pages": [
-        "api-reference/endpoint/webhook"
+        "webhook-reference/endpoint/webhook"
       ]
     }
   ],
