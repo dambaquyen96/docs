@@ -1,5 +1,18 @@
 ---
 title: 'Webhook'
-description: 'Webhook bạn cần xây dựng để hứng kết quả xác thực được gửi từ hệ thống Call Authenticator'
-openapi: 'POST /webhook'
+description: 'Tài liệu mô tả webhook khách hàng cần xây dựng để hứng kết quả xác thực gửi về từ hệ thống Call Authenticator'
 ---
+
+<Note>
+  Webhook xây dựng nên là Restful HTTP Service, nhận body request dạng application/json
+</Note>
+
+### Mẫu request body được gửi về Webhook
+```json
+{
+  "session_id": "...",
+  "verify_code": 200,
+  "verify_result": "success",
+  "metadata": "...",
+}
+```
