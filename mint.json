@@ -49,12 +49,7 @@
     {
       "group": "APIs",
       "pages": [
-        "api-reference/endpoint/verify"
-      ]
-    },
-    {
-      "group": "Webhooks",
-      "pages": [
+        "api-reference/endpoint/verify",
         "api-reference/endpoint/webhook"
       ]
     }
