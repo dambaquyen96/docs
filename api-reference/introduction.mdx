@@ -6,3 +6,28 @@ description: 'Tài liệu hướng dẫn tích hợp'
 
 ## Luồng tích hợp
 <img height="200" src="/images/flow.png" />
+1. **User:** Người dùng đăng nhập trên phần mềm của bạn
+2. **Your App/Browser**: Phần mềm của bạn gửi request đăng nhập tới server backend của bạn
+3. **Your Backend**: Backend của bạn kiểm tra thông tin xác thực. Nếu đúng thông tin đăng nhập, gửi yêu cầu xác thực SĐT khách hàng tới hệ thống Call Authenticator thông qua API `/api/v1/call_authenticator/verify`
+4. **Call Authenticator:** Hệ thống trả về thông tin `session_id` và mã `otp_code` cho Backend, đồng thời thực hiện cuộc gọi ra tới SĐT của khách hàng
+5. **Your App/Browser:** Phần mềm của bạn nhận được mã `otp_code` được Backend gửi về, sẽ hiển thị mã này trên màn hình đăng nhập của KH, và yêu cầu KH bấm phím nhập mã khi nhận được cuộc gọi xác thực
+6. **User**: Khách hàng nhận được cuộc gọi xác thực từ hệ thống Call Authenticator. KH nghe máy và bấm phím mã `otp_code`.
+7. **Call Authenticator**: Hệ thống xác nhận khách hàng bấm đúng mã OTP, thực hiện Callback kết quả xác thực thành công theo `session_id` về cho Backend của bạn
+8. **Your Backend**: Backend của bạn khi nhận được kết quả Callback, sẽ cho phép User đăng nhập thành công vào hệ thống. Ngược lại nếu nhận được phản hồi xác thực lỗi, hoặc quá hạn, bạn cần yêu cầu User xác thực lại với 1 phiên mới
+
+<CardGroup cols={2}>
+  <Card
+    title="Verify"
+    icon="code"
+    href="api-reference/endpoint/verify"
+  >
+    API sử dụng để tạo 1 request xác thực
+  </Card>
+  <Card
+    title="Webhook"
+    icon="webhook"
+    href="api-reference/endpoint/webhook"
+  >
+    Webhook khách hàng cần xây dựng để hứng kết quả xác thực gửi về từ hệ thống Call Authenticator
+  </Card>
+</CardGroup>
