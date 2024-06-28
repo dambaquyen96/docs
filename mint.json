@@ -1,6 +1,6 @@
 {
   "$schema": "https://mintlify.com/schema.json",
-  "name": "Call Authenticator",
+  "name": "Call",
   "logo": {
     "dark": "/logo/logo_dark_background.png",
     "light": "/logo/logo_light_background.png"
