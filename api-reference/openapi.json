@@ -1,8 +1,8 @@
 {
   "openapi": "3.0.1",
   "info": {
-    "title": "OpenAPI Plant Store",
-    "description": "A sample API that uses a plant store as an example to demonstrate features in the OpenAPI specification",
+    "title": "OpenAPI Call Authenticator",
+    "description": "Sample API",
     "license": {
       "name": "MIT"
     },
@@ -10,7 +10,7 @@
   },
   "servers": [
     {
-      "url": "http://sandbox.mintlify.com"
+      "url": "https://api-voiceauth.ryuuabcderf.xyz"
     }
   ],
   "security": [
@@ -19,54 +19,15 @@
     }
   ],
   "paths": {
-    "/plants": {
-      "get": {
-        "description": "Returns all plants from the system that the user has access to",
-        "parameters": [
-          {
-            "name": "limit",
-            "in": "query",
-            "description": "The maximum number of results to return",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Plant response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Plant"
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        }
-      },
+    "/api/v1/call_authenticator/verify": {
       "post": {
-        "description": "Creates a new plant in the store",
+        "description": "Tạo yêu cầu xác thực mới",
         "requestBody": {
-          "description": "Plant to add to the store",
+          "description": "Verify Request",
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NewPlant"
+                "$ref": "#/components/schemas/VerifyRequest"
               }
             }
           },
@@ -74,21 +35,11 @@
         },
         "responses": {
           "200": {
-            "description": "plant response",
+            "description": "Verify Response",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Plant"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
+                  "$ref": "#/components/schemas/VerifyResponse"
                 }
               }
             }
@@ -132,63 +83,65 @@
   },
   "components": {
     "schemas": {
-      "Plant": {
+      "VerifyRequest": {
         "required": [
-          "name"
+          "api_key",
+          "customer_phone",
+          "callback_url"
         ],
         "type": "object",
         "properties": {
-          "name": {
-            "description": "The name of the plant",
+          "api_key": {
+            "description": "API Key để xác thực",
             "type": "string"
           },
-          "tag": {
-            "description": "Tag to specify the type",
+          "customer_phone": {
+            "description": "Số điện thoại cần xác thực",
+            "type": "string"
+          },
+          "callback_url": {
+            "description": "Đường dẫn API webhook để hệ thống gửi về kết quả xác thực OTP thông qua điện thoại",
+            "type": "string"
+          },
+          "metadata": {
+            "description": "Thông tin dữ liệu muốn bổ sung trong dữ liệu callback",
             "type": "string"
           }
         }
       },
-      "NewPlant": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/Plant"
-          },
-          {
-            "required": [
-              "id"
-            ],
-            "type": "object",
-            "properties": {
-              "id": {
-                "description": "Identification number of the plant",
-                "type": "integer",
-                "format": "int64"
-              }
-            }
-          }
-        ]
-      },
-      "Error": {
+      "VerifyResponse": {
         "required": [
-          "error",
-          "message"
+          "status",
+          "msg",
+          "session_id",
+          "otp_code",
+          "expire_time"
         ],
         "type": "object",
         "properties": {
-          "error": {
+          "status": {
+            "description": "Mã phản hồi",
             "type": "integer",
             "format": "int32"
           },
-          "message": {
+          "msg": {
+            "description": "Thông báo phản hồi",
             "type": "string"
+          },
+          "session_id": {
+            "description": "Mã định danh của phiên xác thực",
+            "type": "string"
+          },
+          "otp_code": {
+            "description": "Mã xác thực cần hiển thị trên giao diện",
+            "type": "string"
+          },
+          "expire_time": {
+            "description": "Thời gian hết hạn của mã xác thực, định dạng timestamp millisecond. Nếu thời gian vượt ngưỡng expire_time, bạn cần request 1 phiên xác thực mới",
+            "type": "integer",
+            "format": "int32"
           }
         }
-      }
-    },
-    "securitySchemes": {
-      "bearerAuth": {
-        "type": "http",
-        "scheme": "bearer"
       }
     }
   }
