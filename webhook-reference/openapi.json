@@ -10,7 +10,7 @@
   },
   "servers": [
     {
-      "url": "<Your Webhook>"
+      "url": ""
     }
   ],
   "security": [
@@ -77,7 +77,7 @@
           }
         }
       },
-      "VerifyResponse": {
+      "WebhookResponse": {
         "required": [
           "status",
           "msg"
