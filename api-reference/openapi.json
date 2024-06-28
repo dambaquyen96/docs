@@ -87,7 +87,7 @@
         "type": "object",
         "properties": {
           "status": {
-            "description": "Mã phản hồi",
+            "description": "Mã phản hồi.\n200: Thành công.\n401: API Key sai.\n402: Thông tin body không hợp lệ.\n403: Format SĐT không hợp lệ.\n404: Format callback url không hợp lệ.\n500: Có lỗi xảy ra.",
             "type": "integer",
             "format": "int32"
           },
