@@ -11,6 +11,9 @@
       "to": "#26a6fe"
     }
   },
+  "openapi": [
+    "/call-authenticator/openapi.json"
+  ],
   "topbarLinks": [
     {
       "name": "Support",
