@@ -14,15 +14,9 @@
   "openapi": [
     "/call-authenticator/openapi.json"
   ],
-  "topbarLinks": [
-    {
-      "name": "Support",
-      "url": "mailto:diepdd@mpt.com.vn"
-    }
-  ],
   "topbarCtaButton": {
-    "name": "Homepage",
-    "url": "https://mpt.com.vn"
+    "name": "Liên hệ",
+    "url": "mailto:diepdd@mpt.com.vn"
   },
   "tabs": [],
   "anchors": [],
